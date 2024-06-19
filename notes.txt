@@ -1,0 +1,3 @@
+packages
+npx expo install expo-sqlite
+npx expo install @react-native-picker/picker
