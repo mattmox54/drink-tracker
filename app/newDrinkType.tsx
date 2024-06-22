@@ -10,6 +10,7 @@ import {
 } from "react-native"
 import { Link, router } from "expo-router"
 import { useSQLiteContext } from "expo-sqlite"
+import { StatusBar } from 'expo-status-bar';
 
 export default function NewDrink(){
     var colorScheme = useColorScheme();
@@ -32,6 +33,7 @@ export default function NewDrink(){
 
     return (
         <SafeAreaView style={[styles.componentContainer, colorThemeStyle]}>
+            <StatusBar />
             <Text style={[styles.infoText, colorThemeStyle]}>Drink Name</Text>
             <TextInput 
                 style={[styles.input, colorThemeStyle]}
@@ -84,8 +86,8 @@ const styles = StyleSheet.create({
         borderColor: "#fffced"
     },
     lightColorTheme: {
-        color: "#f5f5f5",
-        backgroundColor: "#000000",
+        color: "#000000",
+        backgroundColor: "#f5f5f5",
         borderColor: "#000000"
     }
 })

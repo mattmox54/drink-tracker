@@ -10,6 +10,7 @@ import { useState } from "react";
 import { router } from "expo-router";
 import { useSQLiteContext } from "expo-sqlite"
 import { Picker } from '@react-native-picker/picker';
+import { StatusBar } from 'expo-status-bar';
 
 interface DrinkTypeEntry {
     id: number
@@ -41,9 +42,11 @@ export default function DrinkSelection () {
 
     return (
         <SafeAreaView style={[styles.centered, colorThemeStyle]}>
+            <StatusBar />
             <View style={[styles.pickerContainer, colorThemeStyle]}>
                 <Picker
                     style={[styles.dropdown, colorThemeStyle]}
+                    itemStyle={[styles.item, colorThemeStyle]}
                     selectedValue={selectedDrinkTypeId}
                     onValueChange={setSelectedDrinkTypeId}
                 >
@@ -123,8 +126,8 @@ const styles = StyleSheet.create({
         borderColor: "#fffced"
     },
     lightColorTheme: {
-        color: "#f5f5f5",
-        backgroundColor: "#000000",
-        borderColor: "#000000"
+        color: "#000000",
+        backgroundColor: "#f5f5f5",
+        borderColor: "#00000"
     }
   })

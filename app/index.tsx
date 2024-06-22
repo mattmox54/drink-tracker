@@ -20,6 +20,7 @@ interface DrinksDrankEntry {
 
 export default function Index() {
   var colorScheme = useColorScheme();
+  console.log(colorScheme)
   if(!colorScheme){
     colorScheme = "dark"
   }
@@ -86,8 +87,8 @@ const styles = StyleSheet.create({
     borderColor: "#fffced"
   },
   lightColorTheme: {
-    color: "#f5f5f5",
-    backgroundColor: "#000000",
+    color: "#000000",
+    backgroundColor: "#f5f5f5",
     borderColor: "#000000"
   }
 })
