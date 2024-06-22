@@ -1,4 +1,11 @@
-import { Alert, Pressable, StyleSheet, Text, View } from "react-native"
+import { 
+    Alert, 
+    Pressable, 
+    StyleSheet, 
+    Text, 
+    View, 
+    useColorScheme 
+} from "react-native"
 import { useSQLiteContext }from "expo-sqlite"
 
 interface Props {
@@ -14,6 +21,9 @@ interface DrinkTypeEntry {
 }
 
 export default function DrinkInfoListItem(props: Props){
+    const colorScheme = useColorScheme();
+    const colorThemeStyle = colorScheme=="light" ? styles.lightColorTheme : styles.darkColorTheme
+
     var drinkName = "ERROR: UNKNOWN DRINK"
 
     const db = useSQLiteContext()
@@ -53,15 +63,15 @@ export default function DrinkInfoListItem(props: Props){
     }
 
     return (
-        <View style={styles.container}>
-            <View style={styles.rowContainer}>
-                <Text style={styles.primaryText}>{drinkName}</Text>
+        <View style={[styles.container, colorThemeStyle]}>
+            <View style={[styles.rowContainer, colorThemeStyle]}>
+                <Text style={[styles.primaryText, colorThemeStyle]}>{drinkName}</Text>
                 <Pressable onPress={showDeletePrompt}>
-                    <Text style={styles.subText}>X</Text>
+                    <Text style={[styles.subText, colorThemeStyle]}>X</Text>
                 </Pressable>
             </View>
-            <View style={styles.rowContainer}>
-                <Text style={styles.subText}>{date_str} {time_str}</Text>
+            <View style={[styles.rowContainer, colorThemeStyle]}>
+                <Text style={[styles.subText, colorThemeStyle]}>{date_str} {time_str}</Text>
             </View>
         </View>
     )
@@ -81,9 +91,20 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 10,
         // width: 300
+        margin: 1
     },
     rowContainer: {
         flexDirection: "row",
         justifyContent: "space-between"
+    },
+    darkColorTheme: {
+        color: "#fffced",
+        backgroundColor: "#1F1F1F",
+        borderColor: "#fffced"
+    },
+    lightColorTheme: {
+        color: "#f5f5f5",
+        backgroundColor: "#000000",
+        borderColor: "#000000"
     }
 })

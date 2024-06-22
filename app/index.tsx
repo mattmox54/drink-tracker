@@ -4,11 +4,13 @@ import {
   StyleSheet,
   FlatList,
   Pressable,
+  useColorScheme,
+  SafeAreaView
 } from "react-native";
 import { router } from "expo-router";
 import { useSQLiteContext }from "expo-sqlite"
 import DrinkInfoListItem from "./components/drinkInfoListItem";
-
+import { StatusBar } from 'expo-status-bar';
 
 interface DrinksDrankEntry {
   id: number,
@@ -17,6 +19,12 @@ interface DrinksDrankEntry {
 }
 
 export default function Index() {
+  var colorScheme = useColorScheme();
+  if(!colorScheme){
+    colorScheme = "dark"
+  }
+  const colorThemeStyle = colorScheme=="light" ? styles.lightColorTheme : styles.darkColorTheme
+
   const db = useSQLiteContext()
   const drinksDrankEntries = db.getAllSync<DrinksDrankEntry>("SELECT * FROM drinks_drank")
   console.log(`Drank ${drinksDrankEntries.length} Drinks`)
@@ -36,18 +44,19 @@ export default function Index() {
   drinksDrankEntries.sort(DrinksDrankCompare)
 
   return (
-      <View style={styles.centered}>
-          <FlatList
-              style={styles.drinkList}
-              data={drinksDrankEntries}
-              renderItem={
-                  ({item}) => <DrinkInfoListItem drinkTypeId={item.drink_type} timestamp={item.timestamp} drankId={item.id} onDelete={() => router.replace("/")}/>
-              }
-          />
-          <Pressable style={styles.button} onPress={() => router.navigate("/drinkSelection")}>
-              <Text style={styles.buttonText}>+</Text>
-          </Pressable>
-      </View>
+      <SafeAreaView style={[styles.centered, colorThemeStyle]}>
+        <StatusBar style={colorScheme}/>
+        <FlatList
+            style={[styles.drinkList, colorThemeStyle]}
+            data={drinksDrankEntries}
+            renderItem={
+                ({item}) => <DrinkInfoListItem drinkTypeId={item.drink_type} timestamp={item.timestamp} drankId={item.id} onDelete={() => router.replace("/")}/>
+            }
+        />
+        <Pressable style={[styles.button, colorThemeStyle]} onPress={() => router.navigate("/drinkSelection")}>
+            <Text style={[styles.buttonText, colorThemeStyle]}>+</Text>
+        </Pressable>
+      </SafeAreaView>
   );
 }
 
@@ -70,5 +79,15 @@ const styles = StyleSheet.create({
   },
   drinkList: {
       flex:1
+  },
+  darkColorTheme: {
+    color: "#fffced",
+    backgroundColor: "#1F1F1F",
+    borderColor: "#fffced"
+  },
+  lightColorTheme: {
+    color: "#f5f5f5",
+    backgroundColor: "#000000",
+    borderColor: "#000000"
   }
 })

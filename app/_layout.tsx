@@ -1,7 +1,11 @@
+import { StyleSheet, useColorScheme } from "react-native"
 import { Stack } from "expo-router";
 import { SQLiteProvider, type SQLiteDatabase } from 'expo-sqlite';
 
 export default function RootLayout() {
+  const colorScheme = useColorScheme();
+  const colorThemeStyle = colorScheme=="light" ? styles.lightColorTheme : styles.darkColorTheme
+  
   const initializeDB = async (db: SQLiteDatabase) => {
     await db.execAsync(`
       CREATE TABLE IF NOT EXISTS drink_types (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL);
@@ -20,3 +24,16 @@ export default function RootLayout() {
     
   );
 }
+
+const styles = StyleSheet.create({
+  darkColorTheme: {
+    color: "#fffced",
+    backgroundColor: "#1F1F1F",
+    borderColor: "#fffced"
+  },
+  lightColorTheme: {
+      color: "#f5f5f5",
+      backgroundColor: "#000000",
+      borderColor: "#000000"
+  }
+})

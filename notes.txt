@@ -1,3 +1,20 @@
 packages
 npx expo install expo-sqlite
 npx expo install @react-native-picker/picker
+npx expo install expo-system-ui
+npx expo install expo-status-bar
+
+command reference
+npx expo run:android --variant release
+
+known issues
+add margin between drinks on main screen
+missing L in cancel on select drink screen
+status bar color is white and can't select
+first time adding drink after creating first drink, you add to select it from drop down instead of just being able to hit OK
+
+dark background: #1F1F1F
+dark text: #fffced
+
+light background: #f5f5f5
+light text: #000000

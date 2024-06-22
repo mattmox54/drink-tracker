@@ -2,7 +2,9 @@ import {
     View, 
     Text, 
     Pressable, 
-    StyleSheet
+    StyleSheet,
+    SafeAreaView,
+    useColorScheme
 } from "react-native";
 import { useState } from "react";
 import { router } from "expo-router";
@@ -15,6 +17,12 @@ interface DrinkTypeEntry {
 }
 
 export default function DrinkSelection () {
+    var colorScheme = useColorScheme();
+    if(!colorScheme){
+        colorScheme = "dark"
+    }
+    const colorThemeStyle = colorScheme=="light" ? styles.lightColorTheme : styles.darkColorTheme
+
     const db = useSQLiteContext()
     const drinkTypeEntries = db.getAllSync<DrinkTypeEntry>("SELECT * FROM drink_types")  
     var initialId = -1
@@ -32,37 +40,39 @@ export default function DrinkSelection () {
     }
 
     return (
-        <View style={styles.centered}>
-            <View style={styles.pickerContainer}>
-                <View style={styles.pickerBorder}>
-                    <Picker
-                        style={styles.dropdown}
-                        selectedValue={selectedDrinkTypeId}
-                        onValueChange={setSelectedDrinkTypeId}
-                    >
-                        {
-                            drinkTypeEntries.map(entry => <Picker.Item style={styles.item} key={entry.id} label={entry.name} value={entry.id} />)
-                        }
-                    </Picker>
+        <SafeAreaView style={[styles.centered, colorThemeStyle]}>
+            <View style={[styles.pickerContainer, colorThemeStyle]}>
+                <Picker
+                    style={[styles.dropdown, colorThemeStyle]}
+                    selectedValue={selectedDrinkTypeId}
+                    onValueChange={setSelectedDrinkTypeId}
+                >
+                    {
+                        drinkTypeEntries.map(entry => <Picker.Item 
+                            style={styles.item} 
+                            key={entry.id} 
+                            label={entry.name} 
+                            value={entry.id} />
+                        )
+                    }
+                </Picker>
+            </View>
+            <View style={[styles.buttonContainer, colorThemeStyle]}>
+                <View style={[styles.rowContainer, colorThemeStyle]}>
+                    <Pressable style={[styles.button, {width:"90%"}, colorThemeStyle]} onPress={() => router.navigate("/newDrinkType")}>
+                        <Text style={[styles.buttonText, colorThemeStyle]}>+</Text>
+                    </Pressable>
+                </View>
+                <View style={[styles.rowContainer, colorThemeStyle]}>
+                    <Pressable style={[styles.button, {width:"44%"}, colorThemeStyle]} onPress={insertDrankDrink}>
+                        <Text style={[styles.buttonText, colorThemeStyle]}>OK</Text>
+                    </Pressable>
+                    <Pressable style={[styles.button, {width:"44%"}, colorThemeStyle]} onPress={() => router.navigate("/")}>
+                        <Text style={[styles.buttonText, colorThemeStyle]}>Cancel</Text>
+                    </Pressable>
                 </View>
             </View>
-            <View style={styles.buttonContainer}>
-                <View style={styles.rowContainer}>
-                    <Pressable style={{...styles.button, ...{width:"90%"}}} onPress={() => router.navigate("/newDrinkType")}>
-                        <Text style={styles.buttonText}>+</Text>
-                    </Pressable>
-                </View>
-                <View style={styles.rowContainer}>
-                    <Pressable style={{...styles.button, ...{width:"44%"}}} onPress={insertDrankDrink}>
-                        <Text style={styles.buttonText}>OK</Text>
-                    </Pressable>
-                    <Pressable style={{...styles.button, ...{width:"44%"}}} onPress={() => router.navigate("/")}>
-                        <Text style={styles.buttonText}>Cancel</Text>
-                    </Pressable>
-                </View>
-                
-            </View>
-        </View>
+        </SafeAreaView>
     );   
 }
 
@@ -86,7 +96,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         textAlign: "center",
-        fontSize: 44
+        fontSize: 40
     },
     centered: {
       flex: 1,
@@ -106,5 +116,15 @@ const styles = StyleSheet.create({
     },
     item: {
         fontSize: 32
+    },
+    darkColorTheme: {
+        color: "#fffced",
+        backgroundColor: "#1F1F1F",
+        borderColor: "#fffced"
+    },
+    lightColorTheme: {
+        color: "#f5f5f5",
+        backgroundColor: "#000000",
+        borderColor: "#000000"
     }
   })

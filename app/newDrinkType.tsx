@@ -4,12 +4,20 @@ import {
     View,
     Pressable,
     Text,
-    StyleSheet
+    StyleSheet,
+    SafeAreaView,
+    useColorScheme
 } from "react-native"
 import { Link, router } from "expo-router"
 import { useSQLiteContext } from "expo-sqlite"
 
 export default function NewDrink(){
+    var colorScheme = useColorScheme();
+    if(!colorScheme){
+        colorScheme = "dark"
+    }
+    const colorThemeStyle = colorScheme=="light" ? styles.lightColorTheme : styles.darkColorTheme
+
     const [drinkName, setDrinkName] = useState("")
 
     const db = useSQLiteContext()
@@ -23,21 +31,21 @@ export default function NewDrink(){
     }
 
     return (
-        <View style={styles.componentContainer}>
-            <Text style={styles.infoText}>Drink Name</Text>
+        <SafeAreaView style={[styles.componentContainer, colorThemeStyle]}>
+            <Text style={[styles.infoText, colorThemeStyle]}>Drink Name</Text>
             <TextInput 
-                style={styles.input}
+                style={[styles.input, colorThemeStyle]}
                 onChangeText={setDrinkName}
             />
-            <View style={styles.rowContainer}>
-                <Pressable style={styles.button} onPress={submitDrinkType}>
-                    <Text style={styles.buttonText}>Submit</Text>
+            <View style={[styles.rowContainer, colorThemeStyle]}>
+                <Pressable style={[styles.button, colorThemeStyle]} onPress={submitDrinkType}>
+                    <Text style={[styles.buttonText, colorThemeStyle]}>Submit</Text>
                 </Pressable>
-                <Pressable style={styles.button} onPress={() => router.navigate("/drinkSelection")}>
-                    <Text style={styles.buttonText}>Cancel</Text>
+                <Pressable style={[styles.button, colorThemeStyle]} onPress={() => router.navigate("/drinkSelection")}>
+                    <Text style={[styles.buttonText, colorThemeStyle]}>Cancel</Text>
                 </Pressable>
             </View> 
-        </View>   
+        </SafeAreaView>   
     )
 }
 
@@ -69,5 +77,15 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textAlign: "left",
         width: "80%"
+    },
+    darkColorTheme: {
+        color: "#fffced",
+        backgroundColor: "#1F1F1F",
+        borderColor: "#fffced"
+    },
+    lightColorTheme: {
+        color: "#f5f5f5",
+        backgroundColor: "#000000",
+        borderColor: "#000000"
     }
 })
