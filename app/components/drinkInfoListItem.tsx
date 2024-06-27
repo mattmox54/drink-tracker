@@ -65,7 +65,7 @@ export default function DrinkInfoListItem(props: Props){
     return (
         <View style={[styles.container, colorThemeStyle]}>
             <View style={[styles.rowContainer, colorThemeStyle]}>
-                <Text style={[styles.primaryText, colorThemeStyle]}>{drinkName}</Text>
+                <Text numberOfLines={1} style={[styles.primaryText, colorThemeStyle]}>{drinkName}</Text>
                 <Pressable onPress={showDeletePrompt}>
                     <Text style={[styles.subText, colorThemeStyle]}>X</Text>
                 </Pressable>

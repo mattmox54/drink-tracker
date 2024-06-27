@@ -68,10 +68,10 @@ export default function DrinkSelection () {
                 </View>
                 <View style={[styles.rowContainer, colorThemeStyle]}>
                     <Pressable style={[styles.button, {width:"44%"}, colorThemeStyle]} onPress={insertDrankDrink}>
-                        <Text style={[styles.buttonText, colorThemeStyle]}>OK</Text>
+                        <Text adjustsFontSizeToFit={true} numberOfLines={1} style={[styles.buttonText, colorThemeStyle]}>OK</Text>
                     </Pressable>
                     <Pressable style={[styles.button, {width:"44%"}, colorThemeStyle]} onPress={() => router.navigate("/")}>
-                        <Text style={[styles.buttonText, colorThemeStyle]}>Cancel</Text>
+                        <Text adjustsFontSizeToFit={true} numberOfLines={1} style={[styles.buttonText, colorThemeStyle]}>Cancel</Text>
                     </Pressable>
                 </View>
             </View>
@@ -95,11 +95,11 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       padding: 10,
       borderRadius: 10,
-      margin: "1%",
+      margin: "1%"
     },
     buttonText: {
         textAlign: "center",
-        fontSize: 40
+        fontSize: 40        
     },
     centered: {
       flex: 1,

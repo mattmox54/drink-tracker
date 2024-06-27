@@ -42,11 +42,22 @@ export default function Index() {
       }
   }
 
+  const todaysDate = new Date().toLocaleDateString()
+
+  var recentDrinks = drinksDrankEntries.filter((entry) => {
+    const entryDate = new Date(entry.timestamp).toLocaleDateString()
+    return entryDate==todaysDate
+  })
+
   drinksDrankEntries.sort(DrinksDrankCompare)
 
   return (
       <SafeAreaView style={[styles.centered, colorThemeStyle]}>
         <StatusBar style={colorScheme}/>
+        <View>
+            <Text style={[styles.totalText, colorThemeStyle]}>{`Total Drank: ${drinksDrankEntries.length}`}</Text>
+            <Text style={[styles.totalText, colorThemeStyle]}>{`Drank Today: ${recentDrinks.length}`}</Text>
+        </View>
         <FlatList
             style={[styles.drinkList, colorThemeStyle]}
             data={drinksDrankEntries}
@@ -80,6 +91,10 @@ const styles = StyleSheet.create({
   },
   drinkList: {
       flex:1
+  },
+  totalText: {
+      fontSize: 20,
+      textAlign: "center"
   },
   darkColorTheme: {
     color: "#fffced",
