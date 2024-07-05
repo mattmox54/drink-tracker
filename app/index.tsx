@@ -11,6 +11,7 @@ import { router } from "expo-router";
 import { useSQLiteContext }from "expo-sqlite"
 import DrinkInfoListItem from "./components/drinkInfoListItem";
 import { StatusBar } from 'expo-status-bar';
+import ExportButton from "./components/exportButton";
 
 interface DrinksDrankEntry {
   id: number,
@@ -57,6 +58,7 @@ export default function Index() {
         <View>
             <Text style={[styles.totalText, colorThemeStyle]}>{`Total Drank: ${drinksDrankEntries.length}`}</Text>
             <Text style={[styles.totalText, colorThemeStyle]}>{`Drank Today: ${recentDrinks.length}`}</Text>
+            <ExportButton />
         </View>
         <FlatList
             style={[styles.drinkList, colorThemeStyle]}

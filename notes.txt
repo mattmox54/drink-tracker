@@ -3,6 +3,8 @@ npx expo install expo-sqlite
 npx expo install @react-native-picker/picker
 npx expo install expo-system-ui
 npx expo install expo-status-bar
+npx expo install expo-file-system
+npx expo install expo-sharing
 
 command reference
 npx expo run:android --variant release
